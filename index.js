@@ -59,15 +59,6 @@ onSnapshot(colRef, (snapshot) => {
   console.log(books)
 })
 
-// queries
-const que = query(colRef, where("author", "==", "patrick rothfuss"))
-onSnapshot(que, (snapshot) => {
-  let books = []
-  snapshot.docs.forEach(doc => {
-    books.push({ ...doc.data(), id: doc.id })
-  })
-  console.log(books)
-})
 
 // adding docs
 const addBookForm = document.querySelector('.add')
@@ -98,18 +89,6 @@ deleteBookForm.addEventListener('submit', (e) => {
     })
 })
 
-//ordering data and timestamps
-const q1 = query(colRef, where("author", "==", "patrick rothfuss"), orderBy('title', 'desc'))
-const q2 = query(colRef, orderBy('createdAt')) //ascending order is default 
-//
-onSnapshot(q2, (snapshot) => {
-  let books = []
-  snapshot.docs.forEach(doc => {
-    books.push({ ...doc.data(), id: doc.id })
-  })
-  console.log(books)
-})
-
 // fetching a single document (& realtime)
 const docRef = doc(db, 'books', 'gGu4P9x0ZHK9SspA1d9j')
 // getDoc(docRef)
@@ -119,6 +98,7 @@ const docRef = doc(db, 'books', 'gGu4P9x0ZHK9SspA1d9j')
 onSnapshot(docRef, (doc) => {
   console.log(doc.data(), doc.id)
 })
+
 
 // updating a document
 const updateForm = document.querySelector('.update')
@@ -133,6 +113,30 @@ updateForm.addEventListener('submit', (e) => {
     updateForm.reset()
   })
 })
+
+
+// queries
+const que = query(colRef, where("author", "==", "patrick rothfuss"))
+onSnapshot(que, (snapshot) => {
+  let books = []
+  snapshot.docs.forEach(doc => {
+    books.push({ ...doc.data(), id: doc.id })
+  })
+  console.log(books)
+})
+
+//ordering data and timestamps
+const q1 = query(colRef, where("author", "==", "patrick rothfuss"), orderBy('title', 'desc'))
+const q2 = query(colRef, orderBy('createdAt')) //ascending order is default 
+//
+onSnapshot(q2, (snapshot) => {
+  let books = []
+  snapshot.docs.forEach(doc => {
+    books.push({ ...doc.data(), id: doc.id })
+  })
+  console.log(books)
+})
+
 
 
 // signing users up
